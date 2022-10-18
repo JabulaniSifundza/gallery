@@ -1,25 +1,24 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import FetchMet from './apis/FetchMet';
+import FetchChi from './apis/FetchChi';
 
-function App() {
+function App() {	
+	const getMet = async ()=>{
+		const pieces = await FetchMet.get()
+		console.log(pieces);
+	}
+
+	const getChi = async ()=>{
+		const pieces = await FetchChi.get()
+		console.log(pieces);
+	}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={getMet}>Get Met</button>
+	  <button onClick={getChi}>Get Chi</button>
     </div>
   );
 }
-
 export default App;
