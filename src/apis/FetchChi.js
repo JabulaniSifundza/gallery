@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-	baseURL: "https://api.artic.edu/api/v1/artworks?page=2&limit=100"
+	baseURL: "https://api.artic.edu/api/v1"
 })
 
 //IDs
@@ -25,3 +25,14 @@ export default axios.create({
 //149068
 //149069
 //235740
+
+export const chiOptions = {
+	method: 'GET',
+  };
+
+export const fetchData = async (url, options) =>{
+	const response = await fetch(url, options)
+	const data = await response.json();
+
+	return data;
+}
