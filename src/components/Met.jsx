@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './App.css';
 import FetchMet from '../apis/FetchMet';
-import Webcam from "react-webcam";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import {drawHand} from '../utils/utilities';
@@ -9,6 +8,8 @@ import * as fp from "fingerpose";
 import {GoLeft} from '../gestures/GoLeft';
 import {GoRight} from '../gestures/GoRight';
 import {GoUp} from '../gestures/GoUp';
+import Canvas from './Canvas';
+import WebcamView from './WebcamViewView';
 
 
 
@@ -23,17 +24,17 @@ export default function Met(){
 	const rightBtnRef = useRef();
 
 	const triggerLeft = ()=>{
-		//leftBtnRef.current.click()
-		leftBtnRef.click()
+		leftBtnRef.current.click()
+		//leftBtnRef.click()
 	}
 
 	const triggerRight = ()=>{
-		//rightBtnRef.current.click()
-		rightBtnRef.click()
+		rightBtnRef.current.click()
+		//rightBtnRef.click()
 		
 	}
 	const triggerUp = ()=>{
-		
+		window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 	}
 
 	const nextMet = ()=>{
@@ -129,6 +130,7 @@ export default function Met(){
 					}
 					else if(gesture.gestures[maxConfidence].name === 'scroll_up'){
 						//To-do: write scroll up function
+						triggerUp();
 					}
 					else{
 						return;
@@ -161,9 +163,9 @@ export default function Met(){
 					{
 						metArtInfo.map((artPiece)=>{
 							return (
-								<div>
-								<img src={artPiece.primaryImageSmall} alt="Met artwork" key={artPiece.objectID} />
-									<div className="piece-details">
+								<div className="piece-details">
+									<img src={artPiece.primaryImageSmall} alt="Met artwork" key={artPiece.objectID} />
+									
 										<div className="details-container">
 											<h3>Artist</h3>
 											<h3 key={artPiece.artistDisplayName}>{artPiece.artistDisplayName}</h3>
@@ -174,7 +176,6 @@ export default function Met(){
 											<p>Artist Bio</p>
 											<p key={artPiece.artistDisplayBio}>{artPiece.artistDisplayBio}</p>
 										</div>
-									</div>
 								</div>	
 							)
 						})
@@ -190,36 +191,8 @@ export default function Met(){
 			</div>
 		}
 
-		<div>
-			<Webcam ref={webcamRef}
-			style={{
-				position: "absolute",
-				display: "none",
-				marginLeft: "auto",
-				marginRight: "auto",
-				left: 0,
-				right: 0,
-				textAlign: "center",
-				zIndex: 0,
-				width: 640,
-				height: 480
-			}}/>
-
-			<canvas ref={canvasRef}
-			style={{
-				display: "none",
-				position: "absolute",
-				marginLeft: "auto",
-				marginRight: "auto",
-				left: 0,
-				right: 0,
-				textAlign: "center",
-				zindex: 0,
-				width: 640,
-				height: 480,
-			}}/>
-		
-		</div>
+			<Canvas width="640" ref={canvasRef}/>
+			<WebcamView width="640" ref={webcamRef}/>
 		</div>
 	)
 }

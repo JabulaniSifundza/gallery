@@ -4,11 +4,12 @@ import FetchChi from '../apis/FetchChi';
 import {drawHand} from '../utils/utilities';
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
-import Webcam from "react-webcam";
 import * as fp from "fingerpose";
 import {GoDown} from '../gestures/GoDown';
 import {GoLeft} from '../gestures/GoLeft';
 import {GoRight} from '../gestures/GoRight';
+import Canvas from './Canvas';
+import WebcamView from './WebcamViewView';
 
 
 
@@ -22,20 +23,20 @@ export default function ChicagoArt(){
 	const rightBtnRef = useRef();
 
 	const triggerLeft = ()=>{
-		//leftBtnRef.current.click()
-		leftBtnRef.click()
+		leftBtnRef.current.click()
+		//leftBtnRef.click()
 	}
 
 	const triggerRight = ()=>{
-		//rightBtnRef.current.click()
-		rightBtnRef.click()
+		rightBtnRef.current.click()
+		//rightBtnRef.click()
 		
 	}
 
 	const triggerDown = ()=>{
+		window.scrollTo({bottom: 0, left: 0, behavior: 'smooth'});
 		
 	}
-
 
 	const nextChi = ()=>{
 		if(currentIndex < (chiArtInfo.length - 1)){
@@ -86,7 +87,9 @@ export default function ChicagoArt(){
 		}, 10);
 	}
 
-	useEffect(()=>{runHandPose()},[]);
+	useEffect(()=>{
+		runHandPose()
+	},[]);
 
 	const detect = async (net) =>{
 		if(typeof webcamRef.current !== "undefined" &&
@@ -132,12 +135,11 @@ export default function ChicagoArt(){
 					}
 					else if(gesture.gestures[maxConfidence].name === 'scroll_down'){
 						//To-do: write scroll down function
+						triggerDown();
 					}
 					else{
 						return;
 					}
-
-
 				}
 			}
 			//Draw hand mesh
@@ -165,16 +167,19 @@ export default function ChicagoArt(){
 								{
 									chiArtInfo.map((artwork)=>{
 										return (
-											<div className="details-container">
+											<div className="piece-details">
 												<img src={artwork.imageLnk} alt="Artwork" key={artwork.id} />
-												<h3>Artist</h3>
-												<h3 key={artwork.artist_title}>{artwork.artist_title}</h3>
+												<div className="details-container">
+													
+													<h3>Artist</h3>
+													<h3 key={artwork.artist_title}>{artwork.artist_title}</h3>
 
-												<p>Work Title</p>
-												<p key={artwork.title}>{artwork.title}</p>
-												
-												<p>Inscriptions</p>
-												<p key={artwork.inscriptions}>{artwork.inscriptions}</p>
+													<p>Work Title</p>
+													<p key={artwork.title}>{artwork.title}</p>
+													
+													<p>Inscriptions</p>
+													<p key={artwork.inscriptions}>{artwork.inscriptions}</p>
+												</div>
 											</div>
 										)
 									})	
@@ -192,38 +197,10 @@ export default function ChicagoArt(){
 					</div>
 				</div>
 			}
-
-			<div>
-			<Webcam ref={webcamRef}
-			style={{
-				position: "absolute",
-				display: "none",
-				marginLeft: "auto",
-				marginRight: "auto",
-				left: 0,
-				right: 0,
-				textAlign: "center",
-				zIndex: 0,
-				width: 640,
-				height: 480
-			}}/>
-
-			<canvas ref={canvasRef}
-			style={{
-				display: "none",
-				position: "absolute",
-				marginLeft: "auto",
-				marginRight: "auto",
-				left: 0,
-				right: 0,
-				textAlign: "center",
-				zindex: 0,
-				width: 640,
-				height: 480,
-			  }}/>
-			</div>
+			<Canvas width="640" ref={canvasRef}/>
+			<WebcamView width="640" ref={webcamRef}/>
 		</div>
-
+		
 		
 	)
 
