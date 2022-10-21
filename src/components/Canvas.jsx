@@ -1,12 +1,12 @@
 import React, {forwardRef} from 'react';
 
-export const CanvasDrawing = forwardRef(({width}, canvasRef)=>{
+const Canvas = forwardRef(({width}, canvasRef)=>{
 
 	return (
 		<canvas ref={canvasRef}
 		width={width}
 		style={{
-			display: "none",
+			//display: "none",
 			position: "absolute",
 			marginLeft: "auto",
 			marginRight: "auto",
@@ -17,5 +17,7 @@ export const CanvasDrawing = forwardRef(({width}, canvasRef)=>{
 			height: 480,
 		}}/>
 	)
-})
+});
+
+export default Canvas;
 

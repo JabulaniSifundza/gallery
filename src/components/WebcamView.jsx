@@ -1,14 +1,14 @@
 import React, {forwardRef} from 'react';
 import Webcam from "react-webcam";
 
-export const WebcamView = forwardRef(({width}, webcamRef)=>{
+const WebcamView = forwardRef(({width}, webcamRef)=>{
 
 	return (
 		<Webcam ref={webcamRef}
 		width={width}
 		style={{
 			position: "absolute",
-			display: "none",
+			//display: "none",
 			marginLeft: "auto",
 			marginRight: "auto",
 			left: 0,
@@ -20,3 +20,5 @@ export const WebcamView = forwardRef(({width}, webcamRef)=>{
 		}}/>
 	)
 })
+
+export default WebcamView;

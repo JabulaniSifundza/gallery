@@ -1,15 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
-import './App.css';
 import FetchChi from '../apis/FetchChi';
 import {drawHand} from '../utils/utilities';
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import * as fp from "fingerpose";
-import {GoDown} from '../gestures/GoDown';
-import {GoLeft} from '../gestures/GoLeft';
-import {GoRight} from '../gestures/GoRight';
+import {goDownGesture} from '../gestures/GoDown';
+import {goLeftGesture} from '../gestures/GoLeft';
+import {goRightGesture} from '../gestures/GoRight';
 import Canvas from './Canvas';
-import WebcamView from './WebcamViewView';
+import WebcamView from './WebcamView';
 
 
 
@@ -22,16 +21,16 @@ export default function ChicagoArt(){
 	const leftBtnRef = useRef();
 	const rightBtnRef = useRef();
 
-	const triggerLeft = ()=>{
-		leftBtnRef.current.click()
-		//leftBtnRef.click()
-	}
+	//const triggerLeft = ()=>{
+	//	//leftBtnRef.current.click()
+	//	leftBtnRef.click()
+	//}
 
-	const triggerRight = ()=>{
-		rightBtnRef.current.click()
-		//rightBtnRef.click()
+	//const triggerRight = ()=>{
+	//	//rightBtnRef.current.click()
+	//	rightBtnRef.click()
 		
-	}
+	//}
 
 	const triggerDown = ()=>{
 		window.scrollTo({bottom: 0, left: 0, behavior: 'smooth'});
@@ -80,7 +79,7 @@ export default function ChicagoArt(){
 	}
 
 	const runHandPose = async()=>{
-		const net = await handpose.laod();
+		const net = await handpose.load();
 		console.log("Hand pose model loaded");
 		setInterval(()=>{
 			detect(net);
@@ -110,9 +109,9 @@ export default function ChicagoArt(){
 
 			if(hand.length > 0){
 				const GE = new fp.GestureEstimator([
-					GoRight,
-					GoLeft,
-					GoDown
+					goRightGesture,
+					goLeftGesture,
+					goDownGesture
 				]);
 				const gesture = await GE.estimate(hand[0].landmarks, 4);
 				if(gesture.gestures !== undefined && gesture.gestures.length > 0){
@@ -128,14 +127,19 @@ export default function ChicagoArt(){
 
 					console.log(gesture.gestures[maxConfidence].name);
 					if(gesture.gestures[maxConfidence].name === 'go_right'){
-						triggerRight();
+						setCurrentIndex(prevState => prevState + 1);
+						console.log(currentIndex);
+						console.log("swipe");	
 					}
-					else if(gesture.gestures[maxConfidence].name === 'go_left'){
-						triggerLeft();
+					if(gesture.gestures[maxConfidence].name === 'go_left'){
+						setCurrentIndex(prevState => prevState - 1);
+						console.log(currentIndex);
+						console.log("swipe");
 					}
-					else if(gesture.gestures[maxConfidence].name === 'scroll_down'){
+					if(gesture.gestures[maxConfidence].name === 'scroll_down'){
 						//To-do: write scroll down function
 						triggerDown();
+						console.log("swipe");
 					}
 					else{
 						return;
@@ -157,7 +161,7 @@ export default function ChicagoArt(){
 				chiArtInfo.length > 0 && <div className="carousel-container">
 					<div className="carousel-wrapper">
 						{
-							currentIndex > 0 && <button className="left-btn" ref={leftBtnRef}onClick={prevChi}>
+							currentIndex > 0 && <button className="left-btn" ref={leftBtnRef} onClick={prevChi}>
 								<svg className="left-arrow"></svg>
 							</button>
 						}

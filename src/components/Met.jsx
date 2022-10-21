@@ -1,15 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
-import './App.css';
 import FetchMet from '../apis/FetchMet';
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import {drawHand} from '../utils/utilities';
 import * as fp from "fingerpose";
-import {GoLeft} from '../gestures/GoLeft';
-import {GoRight} from '../gestures/GoRight';
-import {GoUp} from '../gestures/GoUp';
+import {goLeftGesture} from '../gestures/GoLeft';
+import {goRightGesture} from '../gestures/GoRight';
+import {goUpGetsure} from '../gestures/GoUp';
 import Canvas from './Canvas';
-import WebcamView from './WebcamViewView';
+import WebcamView from './WebcamView';
 
 
 
@@ -23,16 +22,16 @@ export default function Met(){
 	const leftBtnRef = useRef();
 	const rightBtnRef = useRef();
 
-	const triggerLeft = ()=>{
-		leftBtnRef.current.click()
-		//leftBtnRef.click()
-	}
+	//const triggerLeft = ()=>{
+	//	leftBtnRef.current.click()
+	//	//leftBtnRef.click()
+	//}
 
-	const triggerRight = ()=>{
-		rightBtnRef.current.click()
-		//rightBtnRef.click()
+	//const triggerRight = ()=>{
+	//	rightBtnRef.current.click()
+	//	//rightBtnRef.click()
 		
-	}
+	//}
 	const triggerUp = ()=>{
 		window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 	}
@@ -75,7 +74,7 @@ export default function Met(){
 	}
 
 	const runHandPose = async()=>{
-		const net = await handpose.laod();
+		const net = await handpose.load();
 		console.log("Hand pose model loaded");
 		setInterval(()=>{
 			detect(net);
@@ -105,9 +104,9 @@ export default function Met(){
 
 			if(hand.length > 0){
 				const GE = new fp.GestureEstimator([
-					GoRight,
-					GoLeft,
-					GoUp
+					goRightGesture,
+					goLeftGesture,
+					goUpGetsure
 				]);
 				const gesture = await GE.estimate(hand[0].landmarks, 4);
 				if(gesture.gestures !== undefined && gesture.gestures.length > 0){
@@ -122,13 +121,20 @@ export default function Met(){
 					);
 
 					console.log(gesture.gestures[maxConfidence].name);
+					
 					if(gesture.gestures[maxConfidence].name === 'go_right'){
-						triggerRight();
+						if(currentMetIndex > 0){
+							setCurrentMetIndex(prevState => prevState - 1);
+							console.log("swipe")
+						}
 					}
-					else if(gesture.gestures[maxConfidence].name === 'go_left'){
-						triggerLeft();
+					if(gesture.gestures[maxConfidence].name === 'go_left'){
+						if(currentMetIndex < (metArtInfo.length - 1)){
+							setCurrentMetIndex(prevState => prevState + 1);
+							console.log("swipe")
+						}
 					}
-					else if(gesture.gestures[maxConfidence].name === 'scroll_up'){
+					if(gesture.gestures[maxConfidence].name === 'scroll_up'){
 						//To-do: write scroll up function
 						triggerUp();
 					}
