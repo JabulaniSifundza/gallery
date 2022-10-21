@@ -27,7 +27,7 @@ export default function ChicagoArt(){
 	//}
 
 	//const triggerRight = ()=>{
-	//	//rightBtnRef.current.click()
+	//rightBtnRef.current.click()
 	//	rightBtnRef.click()
 		
 	//}
@@ -83,12 +83,16 @@ export default function ChicagoArt(){
 		console.log("Hand pose model loaded");
 		setInterval(()=>{
 			detect(net);
-		}, 10);
+		}, 100);
 	}
 
 	useEffect(()=>{
 		runHandPose()
 	},[]);
+
+	//useEffect(()=>{
+	//	setCurrentIndex(chiArtInfo.length)
+	//},[chiArtInfo])
 
 	const detect = async (net) =>{
 		if(typeof webcamRef.current !== "undefined" &&
@@ -127,12 +131,18 @@ export default function ChicagoArt(){
 
 					console.log(gesture.gestures[maxConfidence].name);
 					if(gesture.gestures[maxConfidence].name === 'go_right'){
-						setCurrentIndex(prevState => prevState + 1);
+						//if(currentIndex < (chiArtInfo.length - 1)){
+						//	setCurrentIndex(currentIndex + 1)
+						//}
+						rightBtnRef.current.click();
 						console.log(currentIndex);
 						console.log("swipe");	
 					}
 					if(gesture.gestures[maxConfidence].name === 'go_left'){
-						setCurrentIndex(prevState => prevState - 1);
+						//if(currentIndex > 0){
+						//	setCurrentIndex(currentIndex + 1)
+						//}
+						leftBtnRef.current.click()
 						console.log(currentIndex);
 						console.log("swipe");
 					}
@@ -161,7 +171,7 @@ export default function ChicagoArt(){
 				chiArtInfo.length > 0 && <div className="carousel-container">
 					<div className="carousel-wrapper">
 						{
-							currentIndex > 0 && <button className="left-btn" ref={leftBtnRef} onClick={prevChi}>
+							currentIndex >= 0 && <button className="left-btn" ref={leftBtnRef} onClick={prevChi}>
 								<svg className="left-arrow"></svg>
 							</button>
 						}
@@ -174,14 +184,13 @@ export default function ChicagoArt(){
 											<div className="piece-details">
 												<img src={artwork.imageLnk} alt="Artwork" key={artwork.id} />
 												<div className="details-container">
-													
-													<h3>Artist</h3>
+													<h3>Artist:</h3>
 													<h3 key={artwork.artist_title}>{artwork.artist_title}</h3>
 
-													<p>Work Title</p>
+													<p>Work Title:</p>
 													<p key={artwork.title}>{artwork.title}</p>
 													
-													<p>Inscriptions</p>
+													<p>Inscriptions:</p>
 													<p key={artwork.inscriptions}>{artwork.inscriptions}</p>
 												</div>
 											</div>
@@ -194,7 +203,7 @@ export default function ChicagoArt(){
 							</div>
 						</div>
 						{
-							currentIndex > 0 && <button className="right-btn" onClick={nextChi} ref={rightBtnRef}>
+							currentIndex >= 0 && <button className="right-btn" onClick={nextChi} ref={rightBtnRef}>
 								<svg className="right-arrow"></svg>
 							</button>
 						}

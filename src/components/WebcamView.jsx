@@ -11,10 +11,12 @@ const WebcamView = forwardRef(({width}, webcamRef)=>{
 			//display: "none",
 			marginLeft: "auto",
 			marginRight: "auto",
+			paddingTop: "80px",
+			top: 16,
 			left: 0,
 			right: 0,
 			textAlign: "center",
-			zIndex: 0,
+			zIndex: -1,
 			
 			height: 480
 		}}/>

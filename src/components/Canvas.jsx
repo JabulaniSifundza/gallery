@@ -10,10 +10,12 @@ const Canvas = forwardRef(({width}, canvasRef)=>{
 			position: "absolute",
 			marginLeft: "auto",
 			marginRight: "auto",
+			paddingTop: "80px",
+			top: 16,
 			left: 0,
 			right: 0,
 			textAlign: "center",
-			zindex: 0,
+			zindex: -1,
 			height: 480,
 		}}/>
 	)
