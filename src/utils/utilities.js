@@ -28,7 +28,7 @@ export const drawHand = (predictions, ctx)=>{
 						landmarks[secondJointIndex][1]
 					);
 
-					ctx.strokeStyle = "plum";
+					ctx.strokeStyle = "transparent";
 					ctx.lineWidth = 4;
 					ctx.stroke()
 				}
@@ -43,7 +43,7 @@ export const drawHand = (predictions, ctx)=>{
 				ctx.beginPath();
 				ctx.arc(x, y, 10, 0, 3 * Math.PI);
 				//line colour
-				ctx.fillStyle = "indigo";
+				ctx.fillStyle = "transparent";
 				ctx.fill();
 			}
 		})

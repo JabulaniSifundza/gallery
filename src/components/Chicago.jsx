@@ -83,7 +83,7 @@ export default function ChicagoArt(){
 		console.log("Hand pose model loaded");
 		setInterval(()=>{
 			detect(net);
-		}, 100);
+		}, 800);
 	}
 
 	useEffect(()=>{
@@ -166,7 +166,10 @@ export default function ChicagoArt(){
 	}, [])
 
 	return (
-		<div>
+		<div className="main">
+			<div className="header">
+				<h2>Home</h2>
+			</div>
 			{
 				chiArtInfo.length > 0 && <div className="carousel-container">
 					<div className="carousel-wrapper">
@@ -197,9 +200,7 @@ export default function ChicagoArt(){
 										)
 									})	
 								}
-								<div className="piece-details">
 								
-								</div>
 							</div>
 						</div>
 						{

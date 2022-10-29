@@ -17,7 +17,6 @@ const WebcamView = forwardRef(({width}, webcamRef)=>{
 			right: 0,
 			textAlign: "center",
 			zIndex: -1,
-			
 			height: 480
 		}}/>
 	)
