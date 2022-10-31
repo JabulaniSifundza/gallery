@@ -4,13 +4,12 @@ body{
 
 .header{
 	top: 0;
-	position: fixed;
 	display: flex;
 	width: 100%;
 	height: 100px;
 	z-index: 100;
-	margin-bottom: 60px;
-	background-color: #1B9AAA;
+	border-bottom: 2px solid #1B9AAA;
+	background-color: transparent;
 }
 
 .App {
@@ -86,7 +85,7 @@ p{
 	flex-direction: column;
 	z-index: 4;
 	margin-left: 23.5%;
-	margin-top: 2px;
+	margin-top: 30px;
 	
 }
 

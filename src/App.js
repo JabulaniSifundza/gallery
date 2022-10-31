@@ -11,10 +11,7 @@ function App() {
 
   return (
 	<>
-		
 		<Chicago />
-		
-	
 	</>
 )
 }

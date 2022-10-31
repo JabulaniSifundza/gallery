@@ -7,6 +7,7 @@ import * as fp from "fingerpose";
 import {goDownGesture} from '../gestures/GoDown';
 import {goLeftGesture} from '../gestures/GoLeft';
 import {goRightGesture} from '../gestures/GoRight';
+import {goUpGetsure} from '../gestures/GoUp';
 import Canvas from './Canvas';
 import WebcamView from './WebcamView';
 
@@ -83,7 +84,7 @@ export default function ChicagoArt(){
 		console.log("Hand pose model loaded");
 		setInterval(()=>{
 			detect(net);
-		}, 800);
+		}, 500);
 	}
 
 	useEffect(()=>{
@@ -115,7 +116,8 @@ export default function ChicagoArt(){
 				const GE = new fp.GestureEstimator([
 					goRightGesture,
 					goLeftGesture,
-					goDownGesture
+					goDownGesture,
+					goUpGetsure
 				]);
 				const gesture = await GE.estimate(hand[0].landmarks, 4);
 				if(gesture.gestures !== undefined && gesture.gestures.length > 0){
@@ -131,25 +133,22 @@ export default function ChicagoArt(){
 
 					console.log(gesture.gestures[maxConfidence].name);
 					if(gesture.gestures[maxConfidence].name === 'go_right'){
-						//if(currentIndex < (chiArtInfo.length - 1)){
-						//	setCurrentIndex(currentIndex + 1)
-						//}
 						rightBtnRef.current.click();
 						console.log(currentIndex);
-						console.log("swipe");	
 					}
 					if(gesture.gestures[maxConfidence].name === 'go_left'){
-						//if(currentIndex > 0){
-						//	setCurrentIndex(currentIndex + 1)
-						//}
 						leftBtnRef.current.click()
-						console.log(currentIndex);
-						console.log("swipe");
+						//console.log(currentIndex);
 					}
 					if(gesture.gestures[maxConfidence].name === 'scroll_down'){
-						//To-do: write scroll down function
-						triggerDown();
-						console.log("swipe");
+						window.scrollBy(0, 140, {
+							behavior: 'smooth'
+						});
+					}
+					if(gesture.gestures[maxConfidence].name === 'scroll_up'){
+						window.scrollBy(0, -140, {
+							behavior: 'smooth'
+						});
 					}
 					else{
 						return;
