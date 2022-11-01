@@ -11,7 +11,7 @@ const WebcamView = forwardRef(({width}, webcamRef)=>{
 			//display: "none",
 			marginLeft: "auto",
 			marginRight: "auto",
-			paddingTop: "130px",
+			paddingTop: "200px",
 			top: 16,
 			left: 0,
 			right: 0,

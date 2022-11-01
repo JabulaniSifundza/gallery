@@ -10,6 +10,10 @@ import {goRightGesture} from '../gestures/GoRight';
 import {goUpGetsure} from '../gestures/GoUp';
 import Canvas from './Canvas';
 import WebcamView from './WebcamView';
+import go_down from '../img/go_down.png';
+import go_up from '../img/go_up.png';
+import go_left from '../img/go_left.png';
+import go_right from '../img/go_right.png';
 
 
 
@@ -167,7 +171,32 @@ export default function ChicagoArt(){
 	return (
 		<div className="main">
 			<div className="header">
-				<h2>Home</h2>
+				<div className="myLogo">
+					<img src="" alt="" className="img"/>
+				</div>
+
+				<div className="imgContainer">
+					<div className="directions">
+						<img src={go_down} alt="go_down" className="img" />
+						<p>Scroll Down</p>
+					</div>
+
+					<div className="directions">
+						<img src={go_up} alt="go_up" className="img"/>
+						<p>Scroll Up</p>
+					</div>
+
+					<div className="directions">
+						<img src={go_left} alt="go_left" className="img"/>
+						<p>Next Piece</p>
+					</div>
+					
+					<div className="directions">
+						<img src={go_right} alt="go_right" className="img"/>
+						<p>Previous Piece</p>
+					</div>
+				
+				</div>
 			</div>
 			{
 				chiArtInfo.length > 0 && <div className="carousel-container">
@@ -187,13 +216,13 @@ export default function ChicagoArt(){
 												<img src={artwork.imageLnk} alt="Artwork" key={artwork.id} />
 												<div className="details-container">
 													<h3>Artist:</h3>
-													<h3 key={artwork.artist_title}>{artwork.artist_title}</h3>
+													<h3 key={artwork.artist_title} className="pieceCaption">{artwork.artist_title}</h3>
 
-													<p>Work Title:</p>
-													<p key={artwork.title}>{artwork.title}</p>
+													<p className="pieceCaption">Work Title:</p>
+													<p key={artwork.title} className="pieceCaption">{artwork.title}</p>
 													
-													<p>Inscriptions:</p>
-													<p key={artwork.inscriptions}>{artwork.inscriptions}</p>
+													<p className="pieceCaption">Inscriptions:</p>
+													<p key={artwork.inscriptions} className="pieceCaption">{artwork.inscriptions}</p>
 												</div>
 											</div>
 										)

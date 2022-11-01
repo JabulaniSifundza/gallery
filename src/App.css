@@ -4,12 +4,27 @@ body{
 
 .header{
 	top: 0;
-	display: flex;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 	width: 100%;
-	height: 100px;
+	height: 180px;
 	z-index: 100;
 	border-bottom: 2px solid #1B9AAA;
 	background-color: transparent;
+}
+
+.footer{
+	width: 100vw;
+	height: 100px;
+	background-color: #1B9AAA;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+}
+
+.footerText{
+	color: #FFFFFF;
+	font-family: 'K2D', sans-serif;
 }
 
 .App {
@@ -17,6 +32,37 @@ body{
   background-color: #1B9AAA;
 }
 
+.img{
+	width: 120px;
+	height: 120px;
+	align-self: center;
+	justify-self: center;
+}
+.imgContainer{
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 42px;
+	align-self: center;
+	justify-self: center;
+}
+
+p{
+	color: #FFFFFF;
+	text-align: center;
+}
+
+.pieceCaption{
+	color: #000000;
+	font-family: 'K2D', sans-serif;
+	margin-left: 6px;
+	text-align: left;
+	
+}
+
+.myLogo{
+	align-self: center;
+	margin-left: 30px;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -62,11 +108,6 @@ header{
 
 }
 
-footer{
-	width: 100vw;
-	bottom: 0;
-
-}
 
 h3{
 	font-family: 'Electrolize', sans-serif;
