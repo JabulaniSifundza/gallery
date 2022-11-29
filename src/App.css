@@ -32,6 +32,11 @@ body{
   background-color: #1B9AAA;
 }
 
+.logoImg{
+	width: 180px;
+	height: 90px;
+}
+
 .img{
 	width: 120px;
 	height: 120px;

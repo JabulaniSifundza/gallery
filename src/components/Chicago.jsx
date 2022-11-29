@@ -14,6 +14,7 @@ import go_down from '../img/go_down.png';
 import go_up from '../img/go_up.png';
 import go_left from '../img/go_left.png';
 import go_right from '../img/go_right.png';
+import myLogo from '../img/LogoRed.png'
 
 
 
@@ -142,7 +143,7 @@ export default function ChicagoArt(){
 					}
 					if(gesture.gestures[maxConfidence].name === 'go_left'){
 						leftBtnRef.current.click()
-						//console.log(currentIndex);
+						console.log(currentIndex);
 					}
 					if(gesture.gestures[maxConfidence].name === 'scroll_down'){
 						window.scrollBy(0, 140, {
@@ -172,7 +173,7 @@ export default function ChicagoArt(){
 		<div className="main">
 			<div className="header">
 				<div className="myLogo">
-					<img src="" alt="" className="img"/>
+					<img src={myLogo} alt="" className="logoImg"/>
 				</div>
 
 				<div className="imgContainer">
