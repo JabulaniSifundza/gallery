@@ -254,11 +254,12 @@ img{
 	right: 24px;
 }
 
-.right-arrow{
-
+.loader{
+	margin-left: 90px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
-.left-arrow{
 
-}
 

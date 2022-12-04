@@ -14,13 +14,15 @@ import go_down from '../img/go_down.png';
 import go_up from '../img/go_up.png';
 import go_left from '../img/go_left.png';
 import go_right from '../img/go_right.png';
-import myLogo from '../img/LogoRed.png'
+import myLogo from '../img/LogoRed.png';
+import {InfinitySpin} from "react-loader-spinner";
 
 
 
 export default function ChicagoArt(){
 	const [chiArtInfo, setChiArtInfo] = useState([]);
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const [model, setModel] = useState(null);
 
 	const webcamRef = useRef(null);
 	const canvasRef = useRef(null);
@@ -38,10 +40,10 @@ export default function ChicagoArt(){
 		
 	//}
 
-	const triggerDown = ()=>{
-		window.scrollTo({bottom: 0, left: 0, behavior: 'smooth'});
+	//const triggerDown = ()=>{
+	//	window.scrollTo({bottom: 0, left: 0, behavior: 'smooth'});
 		
-	}
+	//}
 
 	const nextChi = ()=>{
 		if(currentIndex < (chiArtInfo.length - 1)){
@@ -84,9 +86,10 @@ export default function ChicagoArt(){
 		}
 	}
 
-	const runHandPose = async()=>{
+	const runHandPose = async ()=>{
 		const net = await handpose.load();
 		console.log("Hand pose model loaded");
+		setModel(net);
 		setInterval(()=>{
 			detect(net);
 		}, 500);
@@ -168,10 +171,22 @@ export default function ChicagoArt(){
 	useEffect(()=>{
 		getChi()
 	}, [])
-
 	return (
 		<div className="main">
-			<div className="header">
+
+			{
+				model == null?
+				<div className="loader">
+					<InfinitySpin 
+					color="#1B9AAA"
+					width={400}
+					/>
+				</div>
+
+				:
+
+				<>
+				<div className="header">
 				<div className="myLogo">
 					<img src={myLogo} alt="" className="logoImg"/>
 				</div>
@@ -196,7 +211,6 @@ export default function ChicagoArt(){
 						<img src={go_right} alt="go_right" className="img"/>
 						<p>Previous Piece</p>
 					</div>
-				
 				</div>
 			</div>
 			{
@@ -207,7 +221,6 @@ export default function ChicagoArt(){
 								<svg className="left-arrow"></svg>
 							</button>
 						}
-
 						<div className="carousel-content-wrapper">
 							<div className="carousel-content" style={{transform: `translateX(-${currentIndex*100}%)`}}>
 								{
@@ -228,8 +241,7 @@ export default function ChicagoArt(){
 											</div>
 										)
 									})	
-								}
-								
+								}	
 							</div>
 						</div>
 						{
@@ -242,6 +254,10 @@ export default function ChicagoArt(){
 			}
 			<Canvas width="640" ref={canvasRef}/>
 			<WebcamView width="640" ref={webcamRef}/>
+			</>
+
+			}
+			
 		</div>
 		
 		
